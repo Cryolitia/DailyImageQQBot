@@ -1,5 +1,6 @@
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.BotFactory
 import net.mamoe.mirai.alsoLogin
@@ -11,6 +12,7 @@ import org.apc.dailyimageqqbot.data.SendWhich
 import org.apc.dailyimageqqbot.sender.sendAPOD
 import org.apc.dailyimageqqbot.sender.sendBing
 import java.io.File
+import java.security.MessageDigest
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -24,6 +26,7 @@ fun main(args: Array<String>): Unit = runBlocking {
     }.alsoLogin()
     val targetGroup: Group = bot.getGroup(loginConfig.targetGroup)!!
     //targetGroup.sendMessage("hello,world!")
+    delay(10000)
     when(loginConfig.sendWhich) {
         SendWhich.APOD -> {
             sendAPOD(targetGroup)
@@ -33,9 +36,11 @@ fun main(args: Array<String>): Unit = runBlocking {
         }
         SendWhich.ALL -> {
             sendAPOD(targetGroup)
+            delay(10000)
             sendBing(targetGroup)
         }
     }
+    delay(10000)
     exitProcess(0)
 }
 
@@ -55,6 +60,9 @@ private fun login(): LoginConfig {
     val qq: Long = scanner.nextLong()
     print("Please input QQ password: ")
     val password: String = scanner.next()
+    val md5: MessageDigest = MessageDigest.getInstance("MD5")
+    md5.update(password.toByteArray())
+    val passWordMD5 = md5.digest()
     print("Please input target group: ")
     val target: Long = scanner.nextLong()
     scanner.nextLine()
@@ -81,7 +89,7 @@ private fun login(): LoginConfig {
             }
         }
     }
-    val loginConfig = LoginConfig(qq,password, target, sendWhich)
+    val loginConfig = LoginConfig(qq,passWordMD5, target, sendWhich)
     while (true) {
     print("Would you like to save configs in Config.json? [Y/N] (Default N): ")
     val whetherSave: String? = scanner.nextLine()

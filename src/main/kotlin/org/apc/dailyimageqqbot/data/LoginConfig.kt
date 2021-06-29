@@ -2,7 +2,7 @@ package org.apc.dailyimageqqbot.data
 
 data class LoginConfig(
     val qq: Long,
-    val password: String,
+    val password: ByteArray,
     val targetGroup: Long,
     val sendWhich: SendWhich
 )

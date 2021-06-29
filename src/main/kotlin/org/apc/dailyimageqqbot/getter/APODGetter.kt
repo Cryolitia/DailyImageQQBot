@@ -22,8 +22,10 @@ object APODGetter: Getter {
         stringBuilder.append(apodJson.title)
         stringBuilder.append("\n\n")
         stringBuilder.append(apodJson.explanation)
-        stringBuilder.append("\n\nCopyright: ")
-        stringBuilder.append(apodJson.copyright)
+        if (apodJson.copyright!=null) {
+            stringBuilder.append("\n\nCopyright: ")
+            stringBuilder.append(apodJson.copyright)
+        }
         if (apodJson.media_type==MediaType.video) {
             stringBuilder.append("\n\n")
             stringBuilder.append(apodJson.url)
