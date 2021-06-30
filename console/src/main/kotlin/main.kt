@@ -91,8 +91,8 @@ private fun login(): LoginConfig {
     }
     val loginConfig = LoginConfig(qq,passWordMD5, target, sendWhich)
     while (true) {
-    print("Would you like to save configs in Config.json? [Y/N] (Default N): ")
-    val whetherSave: String? = scanner.nextLine()
+        print("Would you like to save configs in Config.json? [Y/N] (Default N): ")
+        val whetherSave: String? = scanner.nextLine()
         if (whetherSave.isNullOrBlank()) {
             return loginConfig
         }

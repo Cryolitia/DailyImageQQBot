@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="MainKt" type="JetRunConfigurationType" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="MainKt" />
-    <module name="DailyImageQQBot.main" />
+    <module name="DailyImageQQBot.console.main" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

@@ -22,7 +22,7 @@ object BingGetter: Getter {
         bingFile.createNewFile()
         val url = "https://cn.bing.com"+bingJson.url
         bingFile.writeBytes(URL(url).readBytes())
-        return GetterData(bingFile, MediaType.image,bingJson.copyright)
+        return GetterData(bingFile, MediaType.image,"今日Bing："+bingJson.copyright)
     }
 
 }

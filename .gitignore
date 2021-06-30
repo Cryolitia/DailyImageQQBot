@@ -1,9 +1,10 @@
 .gradle
-/build/
+build/
 cache
 Config.json
 device.json
 history
+/launcher
 
 # Ignore Gradle GUI config
 gradle-app.setting

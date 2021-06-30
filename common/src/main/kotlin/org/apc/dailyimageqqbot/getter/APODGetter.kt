@@ -13,6 +13,7 @@ object APODGetter: Getter {
         val result = URL(APOD_URL).readText()
         val apodJson: APODJson = Gson().fromJson(result,APODJson::class.java)
         val stringBuilder = StringBuilder()
+        stringBuilder.append("今日APOD：")
         stringBuilder.append(apodJson.title)
         stringBuilder.append("\n\n")
         stringBuilder.append(apodJson.explanation)
