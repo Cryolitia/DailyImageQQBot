@@ -14,30 +14,29 @@ import org.apc.dailyimageqqbot.getter.MediaType
 
 object Sender {
 
-    suspend fun send(group: Group, getterData: GetterData) {
+    suspend fun send(contact: Contact, getterData: GetterData) {
         if (getterData.mediaType == MediaType.image) {
             if (getterData.text.length<=50) {
                 val chain = buildMessageChain {
-                    +group.uploadImage(getterData.file)
+                    +contact.uploadImage(getterData.file!!)
                     +PlainText(getterData.text)
                 }
-                group.sendMessage(chain)
+                contact.sendMessage(chain)
             } else {
-                group.sendImage(getterData.file)
-                group.sendMessage(getterData.text)
+                contact.sendImage(getterData.file!!)
+                contact.sendMessage(getterData.text)
             }
         } else {
-            group.sendMessage(getterData.text)
-            group.sendFile("/",getterData.file)
+            contact.sendMessage(getterData.text)
         }
     }
 
 }
 
-suspend fun sendAPOD(group: Group) {
-    Sender.send(group, APODGetter.get())
+suspend fun sendAPOD(contact: Contact) {
+    Sender.send(contact, APODGetter.get())
 }
 
-suspend fun sendBing(group: Group) {
-    Sender.send(group, BingGetter.get())
+suspend fun sendBing(contact: Contact) {
+    Sender.send(contact, BingGetter.get())
 }

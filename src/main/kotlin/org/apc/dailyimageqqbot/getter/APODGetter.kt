@@ -12,12 +12,6 @@ object APODGetter: Getter {
     override fun get(): GetterData {
         val result = URL(APOD_URL).readText()
         val apodJson: APODJson = Gson().fromJson(result,APODJson::class.java)
-        val historyFolder = File("./history")
-        if (!historyFolder.exists()) {
-            historyFolder.mkdir()
-        }
-        val apodFile = File("./history/APOD_"+apodJson.date)
-        apodFile.createNewFile()
         val stringBuilder = StringBuilder()
         stringBuilder.append(apodJson.title)
         stringBuilder.append("\n\n")
@@ -33,14 +27,18 @@ object APODGetter: Getter {
         val text = stringBuilder.toString()
         return when (apodJson.media_type) {
             MediaType.image -> {
+                val historyFolder = File("./history")
+                if (!historyFolder.exists()) {
+                    historyFolder.mkdir()
+                }
+                val apodFile = File("./history/APOD_" + apodJson.date)
+                apodFile.createNewFile()
                 val url = if (apodJson.hdurl.isNullOrBlank()) apodJson.url else apodJson.hdurl
                 apodFile.writeBytes(URL(url).readBytes())
                 GetterData(apodFile, MediaType.image,text)
             }
             MediaType.video -> {
-                val url = apodJson.url
-                apodFile.writeBytes(URL(url).readBytes())
-                GetterData(apodFile, MediaType.video,text)
+                GetterData(null, MediaType.video,text)
             }
         }
     }

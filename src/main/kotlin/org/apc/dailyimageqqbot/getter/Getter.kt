@@ -9,7 +9,7 @@ interface Getter {
 }
 
 class GetterData (
-    val file: File,
+    val file: File?,
     val mediaType: MediaType,
     val text: String
     )
